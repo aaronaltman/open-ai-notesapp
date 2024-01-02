@@ -10,6 +10,7 @@ import {
   FormDescription,
   FormMessage,
 } from "@/components/ui/form"; // Adjust the import path as needed
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // Define the schema for note form using Zod
 const schema = z.object({
