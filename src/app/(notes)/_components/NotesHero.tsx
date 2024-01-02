@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image"; // Adjust if you have a specific logo
 import CreateNote from "./CreateNote";
-import AddNoteDialog from "./AddNoteDialog";
+import AddNoteDialog from "./AddEditNoteDialog";
 
 export default function NotesHero() {
   const [showDialog, setShowDialog] = React.useState(false);

@@ -21,14 +21,14 @@ export default async function Page() {
   return (
     <div>
       <NotesHero />
-      <h2 className="text-center py-5 text-3xl">{user?.firstName}'s notes</h2>
+      <h2 className="text-center py-5 text-3xl">{user?.firstName}s notes</h2>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl mx-auto min-h-[50dvh]">
         {allNotes.map((note) => (
           <TheNote note={note} key={note.id} />
         ))}
         {allNotes.length === 0 && (
           <div className="text-center text-gray-500">
-            <p>You don't have any notes yet.</p>
+            <p>You dont have any notes yet.</p>
           </div>
         )}
       </div>

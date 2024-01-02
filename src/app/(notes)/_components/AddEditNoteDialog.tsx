@@ -22,12 +22,15 @@ import { Textarea } from "@/components/ui/textarea";
 import LoadingButton from "./LoadingButton";
 import { useRouter } from "next/navigation";
 
-type AddNoteDialogProps = {
+type AddEditNoteDialogProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
 };
 
-export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
+export default function AddEditNoteDialog({
+  open,
+  setOpen,
+}: AddEditNoteDialogProps) {
   const router = useRouter();
   const form = useForm<CreateNoteSchema>({
     resolver: zodResolver(createNoteSchema),
@@ -86,6 +89,13 @@ export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
                   loading={form.formState.isSubmitting}
                 >
                   Submit Note
+                </LoadingButton>
+                <LoadingButton
+                  type="submit"
+                  loading={form.formState.isSubmitting}
+                  onClick={() => setOpen(false)}
+                >
+                  Edit Note
                 </LoadingButton>
               </DialogFooter>
             </form>
