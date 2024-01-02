@@ -2,6 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs";
 import NotesHero from "../_components/NotesHero";
 import DisplayNotes from "../_components/DisplayNotes";
 import prisma from "@/lib/db/prisma";
+import TheNote from "../_components/TheNote";
 
 export default async function Page() {
   // Get the userId from auth() -- if null, the user is not logged in
@@ -21,8 +22,11 @@ export default async function Page() {
   return (
     <div>
       <NotesHero />
-      <DisplayNotes />
-      {JSON.stringify(allNotes)}
+      <div className="grid grid-cols-3 gap-5 max-w-4xl mx-auto">
+        {allNotes.map((note) => (
+          <TheNote note={note} key={note.id} />
+        ))}
+      </div>
     </div>
   );
 }
