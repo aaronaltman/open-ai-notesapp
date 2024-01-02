@@ -6,6 +6,9 @@ import {
 import { auth } from "@clerk/nextjs";
 import prisma from "@/lib/db/prisma";
 import { NextResponse } from "next/server";
+import { getEmbedding } from "@/lib/openai";
+import { notes } from "@/constants/notes";
+import { notesIndex } from "@/lib/db/pinecone";
 
 // POST request to create notes in the database ---------------------------------
 export async function POST(req: Request) {
@@ -25,13 +28,27 @@ export async function POST(req: Request) {
       body: "Unauthorized",
     };
   }
-  const note = await prisma.note.create({
-    data: {
-      title,
-      content,
-      userId,
-    },
+
+  const embedding = await getEmbeddingForNote(title, content);
+
+  const note = await prisma.$transaction(async (tx) => {
+    const note = await tx.note.create({
+      data: {
+        title,
+        content,
+        userId,
+      },
+    });
+    await notesIndex.upsert([
+      {
+        id: note.id,
+        values: embedding,
+        metadata: { userId },
+      },
+    ]);
+    return note;
   });
+
   return Response.json({ note }, { status: 201 });
 }
 
@@ -118,4 +135,9 @@ export async function DELETE(req: Request) {
     { message: "Note Deleted Successfully" },
     { status: 200 }
   );
+}
+
+// PINECONE Requests to database ----------------------------------
+export async function getEmbeddingForNote(title: string, content: string) {
+  return getEmbedding(title + "\n\n " + content);
 }
