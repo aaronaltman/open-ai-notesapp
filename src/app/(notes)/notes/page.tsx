@@ -1,16 +1,18 @@
 import { auth, currentUser } from "@clerk/nextjs";
-import NotesHeader from "../_components/NotesHeader";
 import NotesHero from "../_components/NotesHero";
-import CreateNote from "../_components/CreateNote";
 import DisplayNotes from "../_components/DisplayNotes";
+import prisma from "@/lib/db/prisma";
 
 export default async function Page() {
   // Get the userId from auth() -- if null, the user is not logged in
   const { userId } = auth();
 
-  if (userId) {
-    // Query DB for user specific information or display assets only to logged in users
-  }
+  if (!userId) throw Error("Not logged in");
+
+  // Get all notes for the user
+  const allNotes = await prisma.note.findMany({
+    where: { userId },
+  });
 
   // Get the User object when you need access to the user's information
   const user = await currentUser();
@@ -20,6 +22,7 @@ export default async function Page() {
     <div>
       <NotesHero />
       <DisplayNotes />
+      {JSON.stringify(allNotes)}
     </div>
   );
 }

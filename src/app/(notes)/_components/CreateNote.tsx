@@ -8,17 +8,23 @@ import {
 } from "@/components/ui/dialog";
 
 import React from "react";
+import SimpleForm from "./SimpleForm";
 
 export default function CreateNote() {
   return (
     <Dialog>
-      <DialogTrigger>Open</DialogTrigger>
+      <DialogTrigger>
+        <div className="bg-white px-4 py-2 rounded-xl text-slate-900">
+          Create a New Note
+        </div>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure absolutely sure?</DialogTitle>
+          <DialogTitle>
+            Enter Your Form information Below. Title Content and Category
+          </DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            <p>Enter a title and some content for your note.</p>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
