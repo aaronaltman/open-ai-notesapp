@@ -1,4 +1,5 @@
-Home page basically completed 
-now add authentication 
-then add the notes page 
+ 
 still need to figure out connecting a damn database
+form for creating notes
+where does the form connect to? 
+where does the AI come in? 

@@ -25,9 +25,12 @@ export default function HomeHero() {
           >
             Get Started
           </Link>
-          <button className="bg-transparent border-2 border-white text-white font-bold py-2 px-6 rounded-full hover:bg-white hover:text-indigo-500 transition duration-300">
+          <Link
+            href="/about"
+            className="bg-transparent border-2 border-white text-white font-bold py-2 px-6 rounded-full hover:bg-white hover:text-indigo-500 transition duration-300"
+          >
             Learn More
-          </button>
+          </Link>
         </div>
       </div>
     </section>
