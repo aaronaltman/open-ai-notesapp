@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ToggleTheme from "../global/ToggleTheme";
 
 export default function HomeHero() {
   return (

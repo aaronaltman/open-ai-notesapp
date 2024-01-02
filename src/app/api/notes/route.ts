@@ -5,6 +5,7 @@ import {
 } from "@/lib/validation/note";
 import { auth } from "@clerk/nextjs";
 import prisma from "@/lib/db/prisma";
+import { NextResponse } from "next/server";
 
 // POST request to create notes in the database ---------------------------------
 export async function POST(req: Request) {
