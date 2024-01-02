@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import LoadingButton from "./LoadingButton";
+import { useRouter } from "next/navigation";
 
 type AddNoteDialogProps = {
   open: boolean;
@@ -26,12 +28,22 @@ type AddNoteDialogProps = {
 };
 
 export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
+  const router = useRouter();
   const form = useForm<CreateNoteSchema>({
     resolver: zodResolver(createNoteSchema),
   });
 
   async function onSubmit(input: CreateNoteSchema) {
-    alert(JSON.stringify(input));
+    const response = await fetch("/api/notes", {
+      method: "POST",
+      body: JSON.stringify(input),
+    });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    form.reset();
+    router.refresh();
+    setOpen(false);
   }
   return (
     <div>
@@ -68,7 +80,14 @@ export default function AddNoteDialog({ open, setOpen }: AddNoteDialogProps) {
                   </FormItem>
                 )}
               />
-              <DialogFooter></DialogFooter>
+              <DialogFooter>
+                <LoadingButton
+                  type="submit"
+                  loading={form.formState.isSubmitting}
+                >
+                  Submit Note
+                </LoadingButton>
+              </DialogFooter>
             </form>
           </Form>
         </DialogContent>
